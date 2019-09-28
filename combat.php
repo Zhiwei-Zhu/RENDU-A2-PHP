@@ -4,11 +4,17 @@ require __DIR__ . "/vendor/autoload.php";
 ## ETAPE 0
 
 ## CONNECTEZ VOUS A VOTRE BASE DE DONNEE
-
+try{
+    $pdo = new PDO('mysql:host=127.0.0.1;dbname=php_rendu', "root", "");
+} catch (Exception $e){
+    echo "erreur de connection à la base de donnée";
+}
 ## ETAPE 1
 
 ## POUVOIR SELECTIONER UN PERSONNE DANS LE PREMIER SELECTEUR
-
+$show_stat = $pdo->prepare('SELECT * FROM personnages WHERE pv>10');
+$show_stat->execute();
+$status = $show_stat->fetchAll(PDO::FETCH_OBJ);
 ## ETAPE 2
 
 ## POUVOIR SELECTIONER UN PERSONNE DANS LE DEUXIEME SELECTEUR
@@ -51,17 +57,65 @@ require __DIR__ . "/vendor/autoload.php";
 <h1>Combats</h1>
 <div class="w-100 mt-5">
 
-    <form action="">
+    <form action="" method="post">
         <div class="form-group">
-            <select name="" id=""></select>
+            <select name="pers1" id="pers1"><br>
+                <?php
+                foreach($status as $key => $value):
+                    ;?>
+                    <option value="<?php echo $value->id?>"><?php echo $value->name?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="form-group">
-            <select name="" id=""></select>
+            <select name="pers2" id="pers2"><br>
+                <?php
+                foreach($status as $key => $value):
+                    ;?>
+                    <option value="<?php echo $value->id?>"><?php echo $value->name?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
         <button class="btn">Fight</button>
     </form>
-
+    <?php
+    if (!empty($_POST)) {
+        if($_POST["pers1"] != $_POST["pers2"]) {
+                $perso2 = $_POST["pers2"];
+                $perso1 = $_POST["pers1"];
+                $show_stat1 = $pdo->prepare('SELECT * FROM `personnages` WHERE ID IN("' . $perso1 . '","' . $perso2 . '")');
+                $show_stat1->execute();
+                $status1 = $show_stat1->fetchAll(PDO::FETCH_OBJ);
+                if ($perso1 != $perso2) {
+                    $atkp1 = $status1[0]->atk;
+                    $atkp2 = $status1[1]->atk;
+                    $lifep1 = $status1[0]->pv;
+                    $lifep2 = $status1[1]->pv;
+                    $name1 = $status1[0]->name;
+                    $name2 = $status1[1]->name;
+                } else {
+                    $atkp1 = $status1[0]->atk;
+                    $atkp2 = $status1[0]->atk;
+                    $lifep1 = $status1[0]->pv;
+                    $lifep2 = $status1[0]->pv;
+                    $name1 = $status1[0]->name;
+                    $name2 = $status1[0]->name;
+                }
+                echo "le premier personnage " . $name1 . " A PERDU" . $atkp2;
+                echo "le premier personnage " . $name2 . " A PERDU" . $atkp1;
+                $lostpv1=$lifep1-$atkp2;
+                $lostpv2=$lifep2-$atkp1;
+                $lose_life1 = $pdo->prepare('UPDATE personnages SET pv='.$lostpv1.' WHERE name LIKE "'.$name1.'"');
+                $lose_life1->execute();
+                $lose_life2 = $pdo->prepare('UPDATE personnages SET pv='.$lostpv2.' WHERE name LIKE "'.$name2.'"');
+                $lose_life2->execute();
+        }
+        else{
+            echo  "veuillez rentrerz deux personnages différents";
+        }
+    }
+    ?>
 </div>
 
 </body>
