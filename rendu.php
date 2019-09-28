@@ -44,9 +44,9 @@ $ct->execute();
 #### CREE DEUX LIGNE DANS LA TABLE types
 # une ligne avec comme name = feu
 # une ligne avec comme name = eau
-/*$add_type=$pdo->prepare('INSERT INTO types(name)VALUE("Feu"),("Eau")'
+$add_type=$pdo->prepare('INSERT INTO types(name)VALUE("Feu"),("Eau")'
 );
-$add_type->execute();*/
+$add_type->execute();
 #######################
 ## ETAPE 3
 
