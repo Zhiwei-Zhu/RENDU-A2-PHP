@@ -107,6 +107,7 @@ $types = $show_types->fetchAll(PDO::FETCH_OBJ);
         <div class="form-group col-md-4">
             <label for="type">Type</label>
             <select name="type" id="type"><br>
+                <option value="" selected disabled>Choisissez un type</option>
                 <?php
                 foreach($types as $key => $value):
                     ;?>

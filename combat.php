@@ -102,8 +102,8 @@ $status = $show_stat->fetchAll(PDO::FETCH_OBJ);
                     $name1 = $status1[0]->name;
                     $name2 = $status1[0]->name;
                 }
-                echo "le premier personnage " . $name1 . " A PERDU" . $atkp2;
-                echo "le premier personnage " . $name2 . " A PERDU" . $atkp1;
+                echo "le premier personnage " . $name1 . " A PERDU " . $atkp2."<br>";
+                echo "le premier personnage " . $name2 . " A PERDU " . $atkp1."<br>";
                 $lostpv1=$lifep1-$atkp2;
                 $lostpv2=$lifep2-$atkp1;
                 $lose_life1 = $pdo->prepare('UPDATE personnages SET pv='.$lostpv1.' WHERE name LIKE "'.$name1.'"');
