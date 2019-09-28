@@ -69,6 +69,7 @@ $status = $show_stat->fetchAll(PDO::FETCH_OBJ);
                     $star++;
                     $add_stars = $pdo->prepare('UPDATE personnages SET stars='.$star.' WHERE name ="'.$name.'"');
                     $add_stars->execute();
+                    echo "le personnage ".$name." gagner une étoile";
                 }
             endforeach; ?>
         </form>
