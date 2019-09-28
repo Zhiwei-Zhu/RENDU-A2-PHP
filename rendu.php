@@ -131,4 +131,6 @@ if (!empty($_POST)){
     $add_form->execute();
 
     echo "le personnage " . $_POST["name"] . " a été créer";
-} ?>
+}else {
+    echo  "veuillez rentrer un formulaire valide";
+}?>
