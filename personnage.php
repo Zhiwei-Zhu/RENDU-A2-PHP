@@ -4,11 +4,17 @@ require __DIR__ . "/vendor/autoload.php";
 ## ETAPE 0
 
 ## CONNECTEZ VOUS A VOTRE BASE DE DONNEE
-
+try{
+    $pdo = new PDO('mysql:host=127.0.0.1;dbname=php_rendu', "root", "");
+} catch (Exception $e){
+    echo "erreur de connection à la base de donnée";
+}
 ## ETAPE 1
 
 ## RECUPERER TOUT LES PERSONNAGES CONTENU DANS LA TABLE personnages
-
+$show_stat = $pdo->prepare('SELECT * FROM personnages');
+$show_stat->execute();
+$status = $show_stat->fetchAll(PDO::FETCH_OBJ);
 ## ETAPE 2
 
 ## LES AFFICHERS DANS LE HTML
@@ -47,9 +53,26 @@ require __DIR__ . "/vendor/autoload.php";
     <a href="./combat.php" class="nav-link">Combats</a>
 </nav>
 <h1>Mes personnages</h1>
-<div class="w-100 mt-5">
 
-</div>
+    <div class="w-100 mt-5">
+        <?php foreach ($status as $key=>$value):?>
+        <form method="post">
+            <p>Nom: <?php echo $value->name?></p>
+            <p>atk: <?php echo $value->atk?></p>
+            <p>pv: <?php echo $value->pv?></p>
+            <input name="<?php echo $value->id?>" type="submit" class="btn" value="Stars:<?php echo $value->stars?>"><br>
+
+            <?php
+                if(!empty($_POST["$value->id"]) ){
+                    $star=$value->stars;
+                    $name=$value->name;
+                    $star++;
+                    $add_stars = $pdo->prepare('UPDATE personnages SET stars='.$star.' WHERE name ="'.$name.'"');
+                    $add_stars->execute();
+                }
+            endforeach; ?>
+        </form>
+    </div>
 
 </body>
 </html>
