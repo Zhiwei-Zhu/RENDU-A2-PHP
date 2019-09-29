@@ -94,19 +94,19 @@ $types = $show_types->fetchAll(PDO::FETCH_OBJ);
     <form action="" method="POST" class="form-group">
         <div class="form-group col-md-4">
             <label for="name">Nom du personnage</label>
-            <input name="name" type="text" class="form-control" placeholder="Nom">
+            <input name="name" type="text" class="form-control" placeholder="Nom" required>
         </div>
         <div class="form-group col-md-4">
             <label for="atk">Attaque du personnage</label>
-            <input name="atk" type="text" class="form-control" placeholder="Atk">
+            <input name="atk" type="text" class="form-control" placeholder="Atk" required>
         </div>
         <div class="form-group col-md-4">
             <label for="pv">Pv du personnage</label>
-            <input name="pv" type="text" class="form-control" placeholder="Pv">
+            <input name="pv" type="text" class="form-control" placeholder="Pv" required>
         </div>
         <div class="form-group col-md-4">
             <label for="type">Type</label>
-            <select name="type" id="type"><br>
+            <select name="type" id="type" required><br>
                 <option value="" selected disabled>Choisissez un type</option >
                 <?php
                 foreach($types as $key => $value):
