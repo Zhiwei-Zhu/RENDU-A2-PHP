@@ -131,5 +131,5 @@ if (!empty($_POST)){
     $add_form = $pdo->prepare('INSERT INTO personnages (name,atk,pv,type_id) VALUES ("'.$name.'",'.$atk.','.$pv.','.$type.')');
     $add_form->execute();
 
-    echo "le personnage " . $_POST["name"] . " a été créer";
+    echo "le personnage " . $_POST["name"] . " a été créé";
 }?>
